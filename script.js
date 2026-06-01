@@ -1,4 +1,9 @@
-const API = "http://localhost:3000";
+import {
+  getGames,
+  getTeams,
+  getCompetitors,
+  getMatches
+} from "./service.js";;
 
 let state = {
   competitors: [],
@@ -14,17 +19,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function loadInitialData() {
-  const [games, teams, competitors, matches] = await Promise.all([
-    fetch(`${API}/games`).then(r => r.json()),
-    fetch(`${API}/teams`).then(r => r.json()),
-    fetch(`${API}/competitors`).then(r => r.json()),
-    fetch(`${API}/matches`).then(r => r.json())
-  ]);
-
-  state.games = games;
-  state.teams = teams;
-  state.competitors = competitors;
-  state.matches = matches;
+  state.games = await getGames();
+  state.teams = await getTeams();
+  state.competitors = await getCompetitors();
+  state.matches = await getMatches();
 }
 
 /* NAV */
